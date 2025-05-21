@@ -122,7 +122,7 @@ const LinkEmailAnalyzer = () => {
   };
 
   const getStatusColor = (
-    status: "safe" | "suspicious" | "dangerous" | null,
+    status: "safe" | "suspicious" | "dangerous" | null
   ) => {
     switch (status) {
       case "safe":
@@ -137,7 +137,7 @@ const LinkEmailAnalyzer = () => {
   };
 
   const getStatusIcon = (
-    status: "safe" | "suspicious" | "dangerous" | null,
+    status: "safe" | "suspicious" | "dangerous" | null
   ) => {
     switch (status) {
       case "safe":
@@ -152,7 +152,7 @@ const LinkEmailAnalyzer = () => {
   };
 
   const getStatusBadge = (
-    status: "safe" | "suspicious" | "dangerous" | null,
+    status: "safe" | "suspicious" | "dangerous" | null
   ) => {
     switch (status) {
       case "safe":
@@ -175,13 +175,13 @@ const LinkEmailAnalyzer = () => {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto p-4 bg-background">
-      <Card className="border-2 border-border shadow-lg">
+    <div className="w-full min-h-screen md:px-40 bg-[#030712] text-white p-4">
+      <Card className="border-2 border-border shadow-lg bg-[#111827]">
         <CardHeader>
-          <CardTitle className="text-2xl flex items-center gap-2">
-            <Shield className="h-6 w-6" /> Link & Email Analyzer
+          <CardTitle className="text-2xl flex items-center text-white gap-2">
+            <Shield className="h-6 w-6 text-white" /> Link & Email Analyzer
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-muted text-gray-400">
             Analyze suspicious URLs or emails to check for potential threats and
             scams.
           </CardDescription>
@@ -192,7 +192,7 @@ const LinkEmailAnalyzer = () => {
             value={analysisType}
             onValueChange={(value) => setAnalysisType(value as "url" | "email")}
           >
-            <TabsList className="grid w-full max-w-md grid-cols-2 mb-6">
+            <TabsList className="grid w-full max-w-md grid-cols-2 mb-6 bg-gray-800 text-white">
               <TabsTrigger value="url" className="flex items-center gap-2">
                 <ExternalLink className="h-4 w-4" /> URL Analysis
               </TabsTrigger>
@@ -201,86 +201,78 @@ const LinkEmailAnalyzer = () => {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="url" className="space-y-4">
-              <div className="flex gap-2">
-                <div className="relative flex-1">
-                  <Input
-                    type="text"
-                    placeholder="Enter a URL to analyze (e.g., https://example.com)"
-                    value={input}
-                    onChange={handleInputChange}
-                    className="pr-10"
-                  />
-                  {input && (
-                    <button
-                      onClick={clearInput}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  )}
+            {/* Inputs */}
+            {[
+              {
+                value: "url",
+                placeholder:
+                  "Paste a suspicious URL (e.g. https://example.com/phish)",
+              },
+              {
+                value: "email",
+                placeholder: "Paste a suspicious email or email content",
+              },
+            ].map((tab) => (
+              <TabsContent
+                key={tab.value}
+                value={tab.value}
+                className="space-y-4"
+              >
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <Input
+                      type="text"
+                      placeholder={tab.placeholder}
+                      value={input}
+                      onChange={handleInputChange}
+                      className="pr-10 bg-gray-900 border-gray-700 text-white"
+                    />
+                    {input && (
+                      <button
+                        onClick={clearInput}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    )}
+                  </div>
+                  <Button
+                    onClick={handleSubmit}
+                    disabled={isAnalyzing || !input.trim()}
+                    className="bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light hover:opacity-90 text-white"
+                  >
+                    {isAnalyzing ? "Analyzing..." : "Analyze"}
+                  </Button>
                 </div>
-                <Button
-                  onClick={handleSubmit}
-                  disabled={isAnalyzing || !input.trim()}
-                >
-                  {isAnalyzing ? "Analyzing..." : "Analyze"}
-                </Button>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="email" className="space-y-4">
-              <div className="flex gap-2">
-                <div className="relative flex-1">
-                  <Input
-                    type="text"
-                    placeholder="Paste email content or header to analyze"
-                    value={input}
-                    onChange={handleInputChange}
-                    className="pr-10"
-                  />
-                  {input && (
-                    <button
-                      onClick={clearInput}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  )}
-                </div>
-                <Button
-                  onClick={handleSubmit}
-                  disabled={isAnalyzing || !input.trim()}
-                >
-                  {isAnalyzing ? "Analyzing..." : "Analyze"}
-                </Button>
-              </div>
-            </TabsContent>
+              </TabsContent>
+            ))}
           </Tabs>
 
+          {/* Loading */}
           {isAnalyzing && (
             <div className="mt-8 space-y-4">
-              <p className="text-center text-muted-foreground">
+              <p className="text-center text-gray-400">
                 Analyzing your {analysisType}...
               </p>
               <Progress value={45} className="w-full" />
             </div>
           )}
 
+          {/* Result */}
           {result && (
             <div className="mt-8 space-y-6">
               <Alert
                 variant={
                   result.status === "dangerous" ? "destructive" : "default"
                 }
-                className="border-l-4"
+                className="border-l-4 bg-gray-800 text-white"
                 style={{
                   borderLeftColor:
                     result.status === "safe"
                       ? "rgb(34, 197, 94)"
                       : result.status === "suspicious"
-                        ? "rgb(234, 179, 8)"
-                        : "rgb(239, 68, 68)",
+                      ? "rgb(234, 179, 8)"
+                      : "rgb(239, 68, 68)",
                 }}
               >
                 <div className="flex items-center gap-2">
@@ -290,7 +282,7 @@ const LinkEmailAnalyzer = () => {
                   </AlertTitle>
                   {getStatusBadge(result.status)}
                 </div>
-                <AlertDescription className="mt-2">
+                <AlertDescription className="mt-2 text-gray-300">
                   {result.description}
                 </AlertDescription>
               </Alert>
@@ -301,7 +293,7 @@ const LinkEmailAnalyzer = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {result.details.threatType && (
                       <div>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-black font-medium">
                           Threat Type
                         </p>
                         <p className="font-medium">
@@ -311,7 +303,7 @@ const LinkEmailAnalyzer = () => {
                     )}
                     {result.details.confidence !== undefined && (
                       <div>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-black font-medium">
                           Confidence
                         </p>
                         <div className="flex items-center gap-2">
@@ -327,7 +319,7 @@ const LinkEmailAnalyzer = () => {
                     )}
                     {result.details.detectedBy && (
                       <div className="col-span-1 md:col-span-2">
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-black font-medium">
                           Detection Sources
                         </p>
                         <div className="flex flex-wrap gap-2 mt-1">

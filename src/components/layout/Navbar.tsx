@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Shield, Menu, X, LogIn, LogOut, User, Bell } from "lucide-react";
-import { supabase } from "@/lib/supabase";
-import AuthModal from "../auth/AuthModal";
+// import { supabase } from "@/lib/supabase";
+// import AuthModal from "../auth/AuthModal";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,40 +21,40 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user || null);
-        setLoading(false);
-      },
-    );
+  // useEffect(() => {
+  //   const { data: authListener } = supabase.auth.onAuthStateChange(
+  //     (event, session) => {
+  //       setUser(session?.user || null);
+  //       setLoading(false);
+  //     },
+  //   );
 
-    // Initial session check
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user || null);
-      setLoading(false);
-    });
+  //   // Initial session check
+  //   supabase.auth.getSession().then(({ data: { session } }) => {
+  //     setUser(session?.user || null);
+  //     setLoading(false);
+  //   });
 
-    return () => {
-      authListener?.subscription.unsubscribe();
-    };
-  }, []);
+  //   return () => {
+  //     authListener?.subscription.unsubscribe();
+  //   };
+  // }, []);
 
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-  };
+  // const handleSignOut = async () => {
+  //   await supabase.auth.signOut();
+  // };
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  // const toggleMenu = () => {
+  //   setIsMenuOpen(!isMenuOpen);
+  // };
 
-  const openAuthModal = () => {
-    setIsAuthModalOpen(true);
-  };
+  // const openAuthModal = () => {
+  //   setIsAuthModalOpen(true);
+  // };
 
-  const closeAuthModal = () => {
-    setIsAuthModalOpen(false);
-  };
+  // const closeAuthModal = () => {
+  //   setIsAuthModalOpen(false);
+  // };
 
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur-lg bg-secureSphere-gray-900/90 border-b border-secureSphere-gray-800">
@@ -73,33 +73,39 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
             <Link
-              to="/"
+              to="/post"
               className="text-white hover:text-secureSphere-purple-light transition-colors"
             >
-              Home
+              Post
             </Link>
             <Link
-              to="/resources"
-              className="text-secureSphere-gray-300 hover:text-white transition-colors"
+              to="/check-url"
+              className="text-white hover:text-secureSphere-purple-light transition-colors"
             >
-              Resources
+              CheckURL
             </Link>
             <Link
-              to="/about"
-              className="text-secureSphere-gray-300 hover:text-white transition-colors"
+              to="/check-email"
+              className="text-white hover:text-secureSphere-purple-light transition-colors"
             >
-              About
+              CheckEmail
             </Link>
             <Link
-              to="/contact"
-              className="text-secureSphere-gray-300 hover:text-white transition-colors"
+              to="/check-domain"
+              className="text-white hover:text-secureSphere-purple-light transition-colors"
             >
-              Contact
+              CheckDomain
+            </Link>
+            <Link
+              to="/login"
+              className="bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light hover:opacity-90 text-white px-3 py-1 rounded-md transition-colors"
+            >
+              Login
             </Link>
           </nav>
 
           {/* Auth Buttons / User Menu */}
-          <div className="hidden md:flex items-center gap-4">
+          {/* <div className="hidden md:flex items-center gap-4">
             {loading ? (
               <div className="w-8 h-8 rounded-full bg-secureSphere-gray-800 animate-pulse"></div>
             ) : user ? (
@@ -215,7 +221,7 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-4">
+          {/* <div className="md:hidden flex items-center gap-4">
             {!loading && user && (
               <Avatar className="h-8 w-8 border-2 border-secureSphere-purple-light">
                 <AvatarImage src={user.user_metadata?.avatar_url || ""} />
@@ -236,12 +242,12 @@ const Navbar = () => {
                 <Menu className="h-6 w-6" />
               )}
             </Button>
-          </div>
+          </div> */}
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {isMenuOpen && (
+      {/* {isMenuOpen && (
         <div className="md:hidden bg-secureSphere-gray-900 border-t border-secureSphere-gray-800">
           <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
             <Link
@@ -300,10 +306,10 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Auth Modal */}
-      <AuthModal isOpen={isAuthModalOpen} onClose={closeAuthModal} />
+      {/* <AuthModal isOpen={isAuthModalOpen} onClose={closeAuthModal} /> */}
     </header>
   );
 };

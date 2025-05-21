@@ -24,11 +24,11 @@ const HeroSection = () => {
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">Your{" "}
             <span className="bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light text-transparent bg-clip-text">
-              Protect
-            </span>{" "}
-            Your Digital Identity
+              Digital Shield-
+            </span>{" "} <br />
+            Against Online Frauds!
           </h1>
 
           <p className="text-xl text-secureSphere-gray-300 mb-8 max-w-2xl mx-auto">
@@ -47,7 +47,7 @@ const HeroSection = () => {
             <Button
               size="lg"
               variant="outline"
-              className="border-secureSphere-purple-light text-secureSphere-purple-light hover:bg-secureSphere-purple-dark/20 px-8 py-6 text-lg"
+              className="bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light hover:opacity-90 text-white px-8 py-6 text-lg"
             >
               Learn More
             </Button>

@@ -41,10 +41,9 @@ const AIChatbot = () => {
     setInputValue(e.target.value);
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (inputValue.trim() === "") return;
 
-    // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
       content: inputValue,
@@ -52,31 +51,52 @@ const AIChatbot = () => {
       timestamp: new Date(),
     };
 
-    setMessages([...messages, userMessage]);
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
+    const prompt = inputValue;
     setInputValue("");
 
-    // Simulate bot response after a short delay
-    setTimeout(() => {
-      const botResponses = [
-        "I can help you identify potential phishing emails. Look for urgent language, spelling errors, and suspicious links.",
-        "When checking a website's legitimacy, always verify the URL carefully. Scammers often use URLs that look similar to legitimate sites.",
-        "Never share your OTP (One-Time Password) with anyone, even if they claim to be from your bank or a trusted company.",
-        "Be cautious of unexpected job offers with high pay and minimal requirements. If it sounds too good to be true, it probably is.",
-        "You can report scams through our Scam Reporting Hub to help warn others in the community.",
-      ];
+    try {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyBPHIpUewSqSFfaxfIktCUAyUSAt2X5a0w`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            contents: [
+              {
+                role: "user",
+                parts: [{ text: prompt }],
+              },
+            ],
+          }),
+        }
+      );
 
-      const randomResponse =
-        botResponses[Math.floor(Math.random() * botResponses.length)];
+      const data = await response.json();
+      const textResponse =
+        data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+        "Sorry, I couldn't understand that.";
 
       const botMessage: Message = {
         id: Date.now().toString(),
-        content: randomResponse,
+        content: textResponse,
         sender: "bot",
         timestamp: new Date(),
       };
 
       setMessages((prevMessages) => [...prevMessages, botMessage]);
-    }, 1000);
+    } catch (error) {
+      console.error("Error fetching Gemini API response:", error);
+      const errorMessage: Message = {
+        id: Date.now().toString(),
+        content: "Oops! Something went wrong. Please try again.",
+        sender: "bot",
+        timestamp: new Date(),
+      };
+      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -87,7 +107,6 @@ const AIChatbot = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      {/* Chat toggle button */}
       <Button
         onClick={toggleChatbot}
         className="h-14 w-14 rounded-full bg-primary shadow-lg hover:bg-primary/90"
@@ -118,7 +137,6 @@ const AIChatbot = () => {
         </AnimatePresence>
       </Button>
 
-      {/* Chat window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -148,10 +166,18 @@ const AIChatbot = () => {
                   {messages.map((message) => (
                     <div
                       key={message.id}
-                      className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
+                      className={`flex ${
+                        message.sender === "user"
+                          ? "justify-end"
+                          : "justify-start"
+                      }`}
                     >
                       <div
-                        className={`max-w-[80%] rounded-lg p-3 ${message.sender === "user" ? "bg-primary text-primary-foreground" : "bg-muted"}`}
+                        className={`max-w-[80%] rounded-lg p-3 ${
+                          message.sender === "user"
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-muted"
+                        }`}
                       >
                         <p className="text-sm">{message.content}</p>
                         <p className="text-xs opacity-70 mt-1">
