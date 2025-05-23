@@ -9,6 +9,7 @@ import {
   Github,
   Mail,
 } from "lucide-react";
+import secureSphereLogo from "../../assets/SecureSphere No BG.png"; // Adjust the path as necessary
 
 const Footer = () => {
   return (
@@ -16,10 +17,10 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light p-2 rounded-lg">
-                <Shield className="h-6 w-6 text-white" />
-              </div>
+            <div className="flex items-center gap-1">
+               <div className="h-10 w-12 flex items-center justify-center">
+                          <img src={secureSphereLogo} alt="My Logo" />
+                        </div>
               <span className="text-xl font-bold bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light text-transparent bg-clip-text">
                 SecureSphere
               </span>
@@ -150,7 +151,7 @@ const Footer = () => {
               <h4 className="text-sm font-medium mb-2">
                 Subscribe to our newsletter
               </h4>
-              <form className="flex gap-2">
+              <form className="flex flex-col gap-2">
                 <input
                   type="email"
                   placeholder="Your email"

@@ -8,6 +8,9 @@ import Post from "./components/post/Post";
 import CheckUrl from "./components/checkUrl/CheckUrl";
 import CheckDomain from "./components/checkDomain/CheckDomain";
 import CheckEmail from "./components/checkMail/CheckEmail";
+import SignIn from "./components/auth/Login";
+import SignUp from "./components/auth/SignUp";
+import Signup from "./components/login/Signup";
 
 function App() {
   return (
@@ -21,6 +24,8 @@ function App() {
           <Route path="/check-url" element={<CheckUrl />} />
           <Route path="/check-domain" element={<CheckDomain />} />
           <Route path="/check-email" element={<CheckEmail />} />
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
         {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
       </>

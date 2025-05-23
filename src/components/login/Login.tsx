@@ -1,10 +1,11 @@
 import Layout from "@/components/layout/Layout";
 import React from 'react'
+import SignIn from "../auth/Login";
 
 const Login = () => {
   return (
     <Layout>
-      This is my login page
+      <SignIn />
     </Layout>
   )
 }
