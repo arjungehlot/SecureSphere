@@ -39,11 +39,11 @@ const testimonials = [
 
 const TestimonialSection = () => {
   return (
-    <section className="py-20 bg-secureSphere-gray-900 relative overflow-hidden">
+    <section className="py-20 bg-secureSphere-gray-950 relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-secureSphere-gray-950 to-transparent"></div>
       <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-secureSphere-gray-950 to-transparent"></div>
-      <div className="absolute -top-40 -right-40 w-80 h-80 bg-secureSphere-purple/10 rounded-full blur-3xl"></div>
+      <div className="absolute top-40 -right-40 w-80 h-80 bg-secureSphere-purple/10 rounded-full blur-3xl"></div>
       <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-secureSphere-blue/10 rounded-full blur-3xl"></div>
 
       <div className="container mx-auto px-4 relative z-10">

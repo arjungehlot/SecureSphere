@@ -302,7 +302,7 @@ const ScamReportingHub = () => {
     <div className="w-full min-h-screen bg-[#030712] text-white px-4 py-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <div>
+          <div className="flex flex-col">
             <h1 className="text-2xl font-bold text-white">
               Scam Reporting Hub
             </h1>

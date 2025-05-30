@@ -4,7 +4,7 @@ import svg from '../../assets/SecureSphere.svg';
 
 const SignUp = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#030712] px-4">
+    <div className="min-h-screen flex items-center justify-center py-6 bg-[#030712] px-4">
       <div className="bg-[#0d1420] rounded-xl shadow-xl max-w-xl w-full p-8 border border-[#102239]">
         <div className="flex flex-col items-center mb-6">
           <div className="p-3 rounded-full  mb-[-25px]">
@@ -12,7 +12,7 @@ const SignUp = () => {
               <img src={svg} alt="SecureSphere" className="w-40 h-32" />
             </div>
           </div>
-          <h2 className="text-white text-2xl font-bold mb-3">Create your SecureSphere account</h2>
+          <h2 className="text-white text-2xl text-center font-bold mb-3">Create your SecureSphere account</h2>
           <p className="text-gray-400 text-center text-sm">
             Join us and stay protected online
           </p>

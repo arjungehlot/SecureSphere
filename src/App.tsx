@@ -9,8 +9,8 @@ import CheckUrl from "./components/checkUrl/CheckUrl";
 import CheckDomain from "./components/checkDomain/CheckDomain";
 import CheckEmail from "./components/checkMail/CheckEmail";
 import SignIn from "./components/auth/Login";
-import SignUp from "./components/auth/SignUp";
 import Signup from "./components/login/Signup";
+import ScamHeatmap from "./components/ScamHeatmap";
 
 function App() {
   return (
@@ -26,6 +26,7 @@ function App() {
           <Route path="/check-email" element={<CheckEmail />} />
           <Route path="/login" element={<SignIn />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/heatmap" element={<ScamHeatmap />} />
         </Routes>
         {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
       </>

@@ -122,7 +122,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/"
+                  to="/heatmap"
                   className="text-secureSphere-gray-400 hover:text-secureSphere-purple-light transition-colors text-sm"
                 >
                   Scam Heatmap

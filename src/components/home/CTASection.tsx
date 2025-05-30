@@ -7,8 +7,7 @@ const CTASection = () => {
     <section className="py-20 bg-secureSphere-gray-950 relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-center opacity-5"></div>
-      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-secureSphere-purple/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-secureSphere-blue/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-48 left-0 w-1/3 h-1/3 bg-secureSphere-blue/10 rounded-full blur-3xl"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="bg-gradient-to-br from-secureSphere-gray-900 to-secureSphere-gray-800 rounded-2xl p-8 md:p-12 border border-secureSphere-gray-700 shadow-xl shadow-secureSphere-purple/5">
@@ -51,10 +50,10 @@ const CTASection = () => {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-row gap-2">
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light hover:opacity-90 text-white px-8"
+                  className="bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light w-36 md:w-48 hover:opacity-90 text-white px-8"
                 >
                   Get Started Now
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -62,7 +61,7 @@ const CTASection = () => {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-secureSphere-purple-light text-secureSphere-purple-light hover:bg-secureSphere-purple/10 px-8"
+                  className="bg-white hover:opacity-90 w-36 text-black px-8"
                 >
                   View Demo
                 </Button>

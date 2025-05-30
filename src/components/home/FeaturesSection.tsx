@@ -95,8 +95,7 @@ const FeaturesSection = () => {
             safe from the latest online threats and scams.
           </p>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-4 gap-6">
           {features.map((feature, index) => (
             <motion.div
               key={index}
@@ -104,17 +103,19 @@ const FeaturesSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: feature.delay }}
               viewport={{ once: true }}
-              className={`bg-gradient-to-br ${feature.color} p-6 rounded-xl border border-secureSphere-gray-800 backdrop-blur-sm hover:shadow-lg hover:shadow-secureSphere-purple/5 transition-all duration-300`}
+              className="p-[0.75px] bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light rounded-xl hover:shadow-lg hover:shadow-secureSphere-purple/10 transition-all duration-300"
             >
-              <div className="bg-secureSphere-gray-900/60 p-3 rounded-lg inline-block mb-4">
-                {feature.icon}
+              <div className="bg-[#080d24] p-6 rounded-xl">
+                <div className="p-3 rounded-lg inline-block mb-4">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-semibold mb-2 text-white">
+                  {feature.title}
+                </h3>
+                <p className="text-secureSphere-gray-400">
+                  {feature.description}
+                </p>
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-white">
-                {feature.title}
-              </h3>
-              <p className="text-secureSphere-gray-400">
-                {feature.description}
-              </p>
             </motion.div>
           ))}
         </div>
