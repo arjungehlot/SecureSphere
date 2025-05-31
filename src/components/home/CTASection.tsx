@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, CheckCircle } from "lucide-react";
 
 const CTASection = () => {
+  const [activated, setActivated] = useState(false);
   return (
     <section className="py-20 bg-secureSphere-gray-950 relative overflow-hidden">
       {/* Background elements */}
@@ -53,6 +54,7 @@ const CTASection = () => {
               <div className="flex flex-row gap-2">
                 <Button
                   size="lg"
+                  onClick={() => (window.location.href = "/post")}
                   className="bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light w-36 md:w-48 hover:opacity-90 text-white px-8"
                 >
                   Get Started Now
@@ -94,8 +96,15 @@ const CTASection = () => {
                     </div>
                   </div>
 
-                  <Button className="w-full bg-secureSphere-purple hover:bg-secureSphere-purple-light text-white">
-                    Activate Free Trial
+                  <Button
+                    onClick={() => setActivated(true)}
+                    className={`w-full text-white transition-colors duration-300 ${
+                      activated
+                        ? "bg-green-600 hover:bg-green-700"
+                        : "bg-secureSphere-purple hover:bg-secureSphere-purple-light"
+                    }`}
+                  >
+                    {activated ? "Activated" : "Activate Free Trial"}
                   </Button>
                 </div>
               </div>

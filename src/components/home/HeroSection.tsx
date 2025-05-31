@@ -2,6 +2,8 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Shield, ArrowRight } from "lucide-react";
 import HomeImage from "./../../assets/HomeImage.png"; // Adjust the path as necessary
+import { Link } from "react-router-dom";
+
 
 const HeroSection = () => {
   return (
@@ -44,20 +46,25 @@ const HeroSection = () => {
               </p>
 
               <div className="flex flex-wrap justify-center md:justify-start gap-4">
-                <Button
+                <Link to="/all-features">
+                 <Button
                   size="lg"
                   className="bg-gradient-to-r from-secureSphere-purple w-40 to-secureSphere-blue-light hover:opacity-90 text-white px-8 py-6 text-lg"
                 >
                   Get Started
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="bg-gradient-to-r from-secureSphere-purple w-40 to-secureSphere-blue-light hover:opacity-90 text-white px-8 py-6 text-lg"
-                >
-                  Learn More
-                </Button>
+                </Link>
+               
+                <Link to="/learn-more">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="bg-gradient-to-r from-secureSphere-purple w-40 to-secureSphere-blue-light hover:opacity-90 hover:text-white px-8 py-6 text-lg"
+                  >
+                    Learn More
+                  </Button>
+                </Link>
               </div>
             </div>
 

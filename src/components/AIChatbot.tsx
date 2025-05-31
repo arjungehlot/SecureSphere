@@ -41,6 +41,8 @@ const AIChatbot = () => {
     setInputValue(e.target.value);
   };
 
+  const apikey = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyBPHIpUewSqSFfaxfIktCUAyUSAt2X5a0w";
+
   const handleSendMessage = async () => {
     if (inputValue.trim() === "") return;
 
@@ -57,7 +59,7 @@ const AIChatbot = () => {
 
     try {
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyBPHIpUewSqSFfaxfIktCUAyUSAt2X5a0w`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apikey}`,
         {
           method: "POST",
           headers: {

@@ -1,11 +1,26 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Shield, Menu, X } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Shield, Menu, X, UserCircle } from "lucide-react";
 import { Transition } from "@headlessui/react";
-import secureSphereLogo from "../../assets/SecureSphere No BG.png"; // Adjust the path as necessary
+import secureSphereLogo from "../../assets/SecureSphere No BG.png";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  // Check for token in localStorage
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    setIsLoggedIn(false);
+    navigate("/login");
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur-lg bg-secureSphere-gray-900/90 border-b border-secureSphere-gray-800">
@@ -13,7 +28,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-1">
           <div className="h-10 w-12 flex items-center justify-center">
-            <img src={secureSphereLogo} alt="My Logo" />
+            <img src={secureSphereLogo} alt="SecureSphere Logo" />
           </div>
           <span className="text-xl font-bold bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light text-transparent bg-clip-text">
             SecureSphere
@@ -22,44 +37,42 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
-          {[
-            { to: "/post", label: "Post" },
-            { to: "/check-url", label: "CheckURL" },
-            { to: "/check-email", label: "CheckEmail" },
-            { to: "/check-domain", label: "CheckDomain" },
-          ].map(({ to, label }) => (
-            <Link
-              key={to}
-              to={to}
-              className="text-white hover:text-secureSphere-purple-light transition-colors duration-200 ease-in-out font-medium"
-            >
+          {[{ to: "/post", label: "Post" }, { to: "/check-url", label: "CheckURL" }, { to: "/check-email", label: "CheckEmail" }, { to: "/check-domain", label: "CheckDomain" }].map(({ to, label }) => (
+            <Link key={to} to={to} className="text-white hover:text-secureSphere-purple-light transition-colors duration-200 ease-in-out font-medium">
               {label}
             </Link>
           ))}
 
-          <Link
-            to="/login"
-            className="bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light hover:opacity-90 text-white px-4 py-2 rounded-md transition-colors duration-200 ease-in-out font-semibold"
-          >
-            Login
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <Link to="/dashboard" className="flex items-center gap-1 text-white hover:text-secureSphere-purple-light transition">
+                <UserCircle className="w-5 h-5" />
+                Dashboard
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md font-semibold transition"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              to="/login"
+              className="bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light hover:opacity-90 text-white px-4 py-2 rounded-md transition-colors duration-200 ease-in-out font-semibold"
+            >
+              Login
+            </Link>
+          )}
         </nav>
 
-        {/* Mobile Hamburger Button */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
-          className="md:hidden text-white focus:outline-none"
-        >
-          {isMenuOpen ? (
-            <X className="w-7 h-7" />
-          ) : (
-            <Menu className="w-7 h-7" />
-          )}
+        {/* Hamburger for mobile */}
+        <button onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu" className="md:hidden text-white focus:outline-none">
+          {isMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
         </button>
       </div>
 
-      {/* Mobile Menu with Animation */}
+      {/* Mobile Dropdown */}
       <Transition
         show={isMenuOpen}
         enter="transition ease-out duration-300"
@@ -70,41 +83,54 @@ const Navbar = () => {
         leaveTo="transform -translate-y-4 opacity-0"
       >
         <div className="md:hidden">
-          <nav
-            className="bg-secureSphere-gray-900/95 border-t border-secureSphere-gray-800 rounded-b-md shadow-lg"
-            aria-label="Mobile Navigation Menu"
-          >
+          <nav className="bg-secureSphere-gray-900/95 border-t border-secureSphere-gray-800 rounded-b-md shadow-lg">
             <ul className="flex flex-col space-y-4 px-6 py-5">
-              {[
-                { to: "/post", label: "Post" },
-                { to: "/check-url", label: "CheckURL" },
-                { to: "/check-email", label: "CheckEmail" },
-                { to: "/check-domain", label: "CheckDomain" },
-              ].map(({ to, label }) => (
+              {[{ to: "/post", label: "Post" }, { to: "/check-url", label: "CheckURL" }, { to: "/check-email", label: "CheckEmail" }, { to: "/check-domain", label: "CheckDomain" }].map(({ to, label }) => (
                 <li key={to}>
                   <Link
                     to={to}
                     onClick={() => setIsMenuOpen(false)}
-                    className="block text-white text-lg font-medium rounded-md px-4 py-2
-                             hover:text-secureSphere-purple-light hover:bg-secureSphere-gray-800
-                             transition-colors duration-200 ease-in-out"
+                    className="block text-white text-lg font-medium rounded-md px-4 py-2 hover:text-secureSphere-purple-light hover:bg-secureSphere-gray-800 transition"
                   >
                     {label}
                   </Link>
                 </li>
               ))}
 
-              <li>
-                <Link
-                  to="/login"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light
-                           hover:opacity-90 text-white px-5 py-2 rounded-md text-center font-semibold
-                           transition duration-200 ease-in-out"
-                >
-                  Login
-                </Link>
-              </li>
+              {isLoggedIn ? (
+                <>
+                  <li>
+                    <Link
+                      to="/dashboard"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block text-white text-lg font-semibold px-4 py-2 hover:text-secureSphere-purple-light hover:bg-secureSphere-gray-800 transition"
+                    >
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        handleLogout();
+                      }}
+                      className="block bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-md font-semibold w-full text-left transition"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <li>
+                  <Link
+                    to="/login"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light hover:opacity-90 text-white px-5 py-2 rounded-md text-center font-semibold transition"
+                  >
+                    Login
+                  </Link>
+                </li>
+              )}
             </ul>
           </nav>
         </div>

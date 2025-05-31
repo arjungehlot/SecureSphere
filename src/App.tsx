@@ -11,6 +11,11 @@ import CheckEmail from "./components/checkMail/CheckEmail";
 import SignIn from "./components/auth/Login";
 import Signup from "./components/login/Signup";
 import ScamHeatmap from "./components/ScamHeatmap";
+import ContactPage from "./pages/ContactPage";
+import AboutPage from "./pages/AboutPage";
+import LearnMore from "./pages/LearnMore";
+import AllFeatures from "./pages/AllFeatures";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -27,6 +32,11 @@ function App() {
           <Route path="/login" element={<SignIn />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/heatmap" element={<ScamHeatmap />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/learn-more" element={<LearnMore />} />
+          <Route path="/all-features" element={<AllFeatures />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
         {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
       </>

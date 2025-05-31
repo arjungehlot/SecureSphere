@@ -1,10 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF } from "react-icons/fa";
 import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 import svg from "../../assets/SecureSphere.svg";
 
 const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+
+  if (!email || !password) {
+    toast.error("Please fill in all fields.");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:8000/api/v1/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
+
+      toast.success("Login successful!");
+
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
+    } else {
+      toast.error(data.error || "Login failed. Please try again.");
+    }
+  } catch (error) {
+    toast.error("Server error. Please try again later.");
+  }
+};
+
+
   return (
     <div className="min-h-screen flex items-center justify-center py-5 bg-[#030712] px-4">
       <div className="bg-[#0d1420] rounded-xl shadow-xl max-w-xl w-full p-8 border border-[#102239]">
@@ -22,13 +69,10 @@ const SignIn = () => {
           </p>
         </div>
 
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleLogin}>
           {/* Email */}
           <div>
-            <label
-              htmlFor="email"
-              className="block text-gray-300 font-semibold mb-1"
-            >
+            <label htmlFor="email" className="block text-gray-300 font-semibold mb-1">
               Email Address
             </label>
             <div className="relative">
@@ -39,9 +83,12 @@ const SignIn = () => {
                 id="email"
                 type="email"
                 placeholder="name@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 rounded-md bg-[#06121e] text-white placeholder-gray-500 
                            focus:outline-none focus:ring-2 focus:ring-secureSphere-purple border border-transparent 
                            focus:border-secureSphere-purple transition"
+                required
               />
             </div>
           </div>
@@ -49,16 +96,10 @@ const SignIn = () => {
           {/* Password */}
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label
-                htmlFor="password"
-                className="block text-gray-300 font-semibold"
-              >
+              <label htmlFor="password" className="block text-gray-300 font-semibold">
                 Password
               </label>
-              <a
-                href="#!"
-                className="text-secureSphere-purple text-sm hover:underline"
-              >
+              <a href="#!" className="text-secureSphere-purple text-sm hover:underline">
                 Forgot password?
               </a>
             </div>
@@ -70,9 +111,12 @@ const SignIn = () => {
                 id="password"
                 type="password"
                 placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 rounded-md bg-[#06121e] text-white placeholder-gray-500 
                            focus:outline-none focus:ring-2 focus:ring-secureSphere-purple border border-transparent 
                            focus:border-secureSphere-purple transition"
+                required
               />
             </div>
           </div>
@@ -129,14 +173,14 @@ const SignIn = () => {
         {/* Sign up link */}
         <p className="mt-6 text-center text-gray-400 text-sm">
           Don’t have an account?{" "}
-          <a
-            href="/signup"
-            className="text-secureSphere-purple hover:underline font-semibold"
-          >
+          <a href="/signup" className="text-secureSphere-purple hover:underline font-semibold">
             Sign up now
           </a>
         </p>
       </div>
+
+      {/* Toast container */}
+      <ToastContainer />
     </div>
   );
 };

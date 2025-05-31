@@ -10,7 +10,7 @@ const ContactPage = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-20 bg-secureSphere-gray-950 relative overflow-hidden">
+      <section className="py-20 bg-[#030712] relative overflow-hidden">
         {/* Background elements */}
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-center opacity-5"></div>
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-secureSphere-purple/10 rounded-full blur-3xl"></div>
@@ -226,7 +226,7 @@ const ContactPage = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 bg-secureSphere-gray-950">
+      <section className="py-16 bg-[#030712]">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl font-bold mb-4 text-white">

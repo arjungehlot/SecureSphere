@@ -2,17 +2,21 @@ import React from "react";
 import Layout from "@/components/layout/Layout";
 import { Shield, Users, Globe, Award, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import Arjun from "../assets/Arjun.png";
+import Jitu from "../assets/Jitu.png";
+import Aman from "../assets/Aman.png";
+import Ayush from "../assets/Ayush.png";
 
 const AboutPage = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-20 bg-secureSphere-gray-950 relative overflow-hidden">
+      <section className="py-20 bg-[#030712] relative overflow-hidden">
         {/* Background elements */}
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-center opacity-5"></div>
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-secureSphere-purple/10 rounded-full blur-3xl"></div>
 
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto bg-secureSphere-gray-950 px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
               About{" "}
@@ -30,7 +34,7 @@ const AboutPage = () => {
       </section>
 
       {/* Our Story Section */}
-      <section className="py-16 bg-secureSphere-gray-900">
+      <section className="py-16 bg-[#030712]">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -39,7 +43,7 @@ const AboutPage = () => {
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl font-bold mb-6 text-white">
+              <h2 className="text-5xl font-bold mb-6 text-white">
                 Our{" "}
                 <span className="bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light text-transparent bg-clip-text">
                   Story
@@ -86,10 +90,10 @@ const AboutPage = () => {
       </section>
 
       {/* Our Values Section */}
-      <section className="py-16 bg-secureSphere-gray-950">
+      <section className="py-16 bg-[#030712]">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-white">
+            <h2 className="text-5xl font-bold mb-4 text-white">
               Our{" "}
               <span className="bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light text-transparent bg-clip-text">
                 Values
@@ -163,10 +167,10 @@ const AboutPage = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-16 bg-secureSphere-gray-900">
+      <section className="py-16 bg-[#030712]">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-white">
+            <h2 className="text-5xl mb-5 font-bold  text-white">
               Meet Our{" "}
               <span className="bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light text-transparent bg-clip-text">
                 Team
@@ -177,32 +181,31 @@ const AboutPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                name: "Alex Morgan",
-                role: "Founder & CEO",
-                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Alex",
+                name: "Arjun Gehlot",
+                role: "Frontend Developer",
+                image: Arjun,
                 delay: 0.1,
+              },{
+                name: "Jitu Kumar",
+                role: "Backend Developer",
+                image: Jitu,
+                delay: 0.4,
               },
               {
-                name: "Sophia Chen",
-                role: "Chief Security Officer",
-                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sophia",
-                delay: 0.2,
-              },
-              {
-                name: "Marcus Johnson",
-                role: "Lead Developer",
-                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus",
+                name: "Aman Tiwary",
+                role: "API Testing",
+                image: Aman,
                 delay: 0.3,
               },
               {
-                name: "Priya Patel",
-                role: "AI Research Lead",
-                image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Priya",
-                delay: 0.4,
-              },
+                name: "Ayush Raj",
+                role: "Product Designer",
+                image: Ayush,
+                delay: 0.2,
+              }
             ].map((member, index) => (
               <motion.div
                 key={index}
@@ -212,12 +215,12 @@ const AboutPage = () => {
                 viewport={{ once: true }}
                 className="bg-secureSphere-gray-800/50 p-6 rounded-xl border border-secureSphere-gray-700 text-center"
               >
-                <div className="relative mx-auto w-24 h-24 mb-4">
-                  <div className="absolute inset-0 bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light rounded-full opacity-50 blur-md"></div>
+                <div className="relative mx-auto w-40 h-32 mb-4">
+                  <div className="absolute inset-0  rounded-full opacity-50 blur-md"></div>
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="relative rounded-full w-24 h-24 border-2 border-secureSphere-purple-light"
+                    className="relative rounded-full w-40 h-40 "
                   />
                 </div>
                 <h3 className="text-xl font-semibold text-white">
@@ -231,10 +234,10 @@ const AboutPage = () => {
       </section>
 
       {/* Achievements Section */}
-      <section className="py-16 bg-secureSphere-gray-950">
+      <section className="py-16 bg-[#030712]">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-white">
+            <h2 className="text-5xl font-bold mb-4 text-white">
               Our{" "}
               <span className="bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light text-transparent bg-clip-text">
                 Achievements

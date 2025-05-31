@@ -17,11 +17,11 @@ const ResourcesPage = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-20 bg-secureSphere-gray-950 relative overflow-hidden">
+      <section className="py-20 bg-[#030712] relative overflow-hidden">
         {/* Background elements */}
-        <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-center opacity-5"></div>
-        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-secureSphere-purple/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-secureSphere-blue/10 rounded-full blur-3xl"></div>
+        {/* <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-center opacity-5"></div> */}
+        {/* <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-secureSphere-purple/10 rounded-full blur-3xl"></div> */}
+        <div className="absolute bottom-0 left-56 w-2/3 h-1/3 bg-secureSphere-blue/10 rounded-full blur-3xl"></div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
@@ -40,7 +40,7 @@ const ResourcesPage = () => {
       </section>
 
       {/* Guides Section */}
-      <section className="py-16 bg-secureSphere-gray-900">
+      <section className="py-16 bg-[#030712]">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl font-bold mb-4 text-white">
@@ -64,7 +64,6 @@ const ResourcesPage = () => {
                 icon: (
                   <AlertTriangle className="h-6 w-6 text-secureSphere-purple-light" />
                 ),
-                color: "from-purple-500/20 to-purple-600/20",
                 delay: 0.1,
               },
               {
@@ -72,7 +71,7 @@ const ResourcesPage = () => {
                 description:
                   "Best practices for creating strong passwords, implementing two-factor authentication, and managing your digital identities.",
                 icon: <Lock className="h-6 w-6 text-secureSphere-blue-light" />,
-                color: "from-blue-500/20 to-blue-600/20",
+              
                 delay: 0.2,
               },
               {
@@ -80,7 +79,7 @@ const ResourcesPage = () => {
                 description:
                   "How to spot manipulation techniques used by scammers to trick you into revealing sensitive information or taking harmful actions.",
                 icon: <Shield className="h-6 w-6 text-secureSphere-yellow" />,
-                color: "from-yellow-500/20 to-yellow-600/20",
+               
                 delay: 0.3,
               },
             ].map((guide, index) => (
@@ -90,7 +89,7 @@ const ResourcesPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: guide.delay }}
                 viewport={{ once: true }}
-                className={`bg-gradient-to-br ${guide.color} p-6 rounded-xl border border-secureSphere-gray-800 backdrop-blur-sm hover:shadow-lg hover:shadow-secureSphere-purple/5 transition-all duration-300`}
+                className={`bg-[#0b111e] p-6 rounded-xl border border-secureSphere-gray-800 backdrop-blur-sm hover:shadow-lg hover:border-secureSphere-purple-light hover:shadow-secureSphere-purple/5 transition-all duration-300`}
               >
                 <div className="bg-secureSphere-gray-900/60 p-3 rounded-lg inline-block mb-4">
                   {guide.icon}
@@ -103,7 +102,7 @@ const ResourcesPage = () => {
                 </p>
                 <Button
                   variant="outline"
-                  className="border-secureSphere-gray-700 text-white hover:bg-secureSphere-gray-800"
+                  className="bg-transparent text-white hover:bg-secureSphere-purple-light hover:text-white border-secureSphere-purple-light"
                 >
                   <FileText className="mr-2 h-4 w-4" />
                   Read Guide
@@ -115,7 +114,7 @@ const ResourcesPage = () => {
       </section>
 
       {/* Downloads Section */}
-      <section className="py-16 bg-secureSphere-gray-950">
+      <section className="py-16 bg-[#030712]">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl font-bold mb-4 text-white">
@@ -187,7 +186,7 @@ const ResourcesPage = () => {
       </section>
 
       {/* Video Tutorials Section */}
-      <section className="py-16 bg-secureSphere-gray-900">
+      <section className="py-16 bg-[#030712]">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl font-bold mb-4 text-white">
@@ -202,7 +201,7 @@ const ResourcesPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
                 title: "How to Spot a Phishing Email",
@@ -231,6 +230,18 @@ const ResourcesPage = () => {
                   "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80",
                 duration: "10:17",
                 delay: 0.4,
+              }, {
+                title: "How to Spot a Phishing Email",
+                thumbnail:
+                  "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80",
+                duration: "8:24",
+                delay: 0.1,
+              }, {
+                title: "Securing Your Social Media Accounts",
+                thumbnail:
+                  "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80",
+                duration: "12:51",
+                delay: 0.2,
               },
             ].map((video, index) => (
               <motion.div
@@ -269,7 +280,7 @@ const ResourcesPage = () => {
           <div className="text-center mt-8">
             <Button
               variant="outline"
-              className="border-secureSphere-purple-light text-secureSphere-purple-light hover:bg-secureSphere-purple/10"
+              className="bg-transparent text-white hover:bg-secureSphere-purple-light hover:text-white border-secureSphere-purple-light"
             >
               <ExternalLink className="mr-2 h-4 w-4" />
               View All Tutorials
@@ -279,7 +290,7 @@ const ResourcesPage = () => {
       </section>
 
       {/* Blog Section */}
-      <section className="py-16 bg-secureSphere-gray-950">
+      <section className="py-16 bg-[#030712]">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl font-bold mb-4 text-white">
@@ -355,7 +366,7 @@ const ResourcesPage = () => {
                   </p>
                   <Button
                     variant="ghost"
-                    className="text-secureSphere-purple-light hover:bg-secureSphere-purple/10 p-0"
+                    className="text-secureSphere-purple-light"
                   >
                     Read More <ExternalLink className="ml-2 h-4 w-4" />
                   </Button>
@@ -367,7 +378,7 @@ const ResourcesPage = () => {
           <div className="text-center mt-8">
             <Button
               variant="outline"
-              className="border-secureSphere-purple-light text-secureSphere-purple-light hover:bg-secureSphere-purple/10"
+              className="bg-transparent text-white hover:bg-secureSphere-purple-light hover:text-white border-secureSphere-purple-light"
             >
               <BookOpen className="mr-2 h-4 w-4" />
               View All Articles
@@ -377,7 +388,7 @@ const ResourcesPage = () => {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-16 bg-secureSphere-gray-900">
+      <section className="py-16 bg-[#030712]">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto bg-gradient-to-br from-secureSphere-purple/20 to-secureSphere-blue/20 rounded-2xl p-8 md:p-12 border border-secureSphere-gray-700">
             <div className="text-center mb-8">
