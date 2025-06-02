@@ -19,7 +19,7 @@ import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<p>Loading...</p> }>
       <>
         <Routes>
           <Route path="/" element={<Home />} />
