@@ -21,7 +21,7 @@ const Footer = () => {
                <div className="h-10 w-12 flex items-center justify-center">
                           <img src={secureSphereLogo} alt="My Logo" />
                         </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-secureSphere-purple to-secureSphere-blue-light text-transparent bg-clip-text">
+              <span className="text-xl font-bold text-white  text-transparent bg-clip-text">
                 SecureSphere
               </span>
             </div>
