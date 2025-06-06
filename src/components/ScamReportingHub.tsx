@@ -1,11 +1,8 @@
-"use client";
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -30,197 +27,109 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Separator } from "./ui/separator";
-import { MessageSquare, Heart, Share2, AlertCircle } from "lucide-react";
+import { MessageSquare, Heart, Share2, AlertCircle, Trash2 } from "lucide-react";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 
 interface ScamReport {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   scamType: string;
-  images: string[];
-  user: {
+  imageUrl: string;
+  imageId: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+  __v?: number;
+  user?: {
     name: string;
     avatar: string;
   };
-  timestamp: string;
-  likes: number;
-  comments: number;
-  isLiked: boolean;
+  likes?: number;
+  comments?: any;
+  isLiked?: boolean;
 }
 
 const ScamReportingHub = () => {
+  const navigate = useNavigate();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [reports, setReports] = useState<ScamReport[]>([
-   
-  {
-    id: "1",
-    title: "Fake Amazon Order Confirmation Email",
-    description:
-      "I received an email claiming to be from Amazon about an order I never placed. It had a link to 'cancel' the order but led to a phishing page.",
-    scamType: "Phishing",
-    images: ["https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80"],
-    user: {
-      name: "Alex Johnson",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Alex",
-    },
-    timestamp: "2 hours ago",
-    likes: 24,
-    comments: 8,
-    isLiked: false,
-  },
-  {
-    id: "2",
-    title: "Fake Job Offer via WhatsApp",
-    description:
-      "Received a message offering a job with a suspicious link. They asked for an upfront payment to proceed with hiring.",
-    scamType: "Job Scam",
-    images: ["https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"],
-    user: {
-      name: "Priya Sharma",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Priya",
-    },
-    timestamp: "5 hours ago",
-    likes: 17,
-    comments: 4,
-    isLiked: false,
-  },
-  {
-    id: "3",
-    title: "Suspicious Bank Call Asking for OTP",
-    description:
-      "A person posing as a bank official called and asked me to share an OTP to verify my account. Luckily, I didn’t share it.",
-    scamType: "OTP Fraud",
-    images: ["https://images.unsplash.com/photo-1518779578993-ec3579fee39f?w=800&q=80"],
-    user: {
-      name: "Ravi Patel",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ravi",
-    },
-    timestamp: "Today at 9:45 AM",
-    likes: 31,
-    comments: 5,
-    isLiked: false,
-  },
-  {
-    id: "4",
-    title: "Online Seller Demanded Advance Then Disappeared",
-    description:
-      "I found a clothing seller on Instagram who asked for full payment in advance. Once I paid, they blocked me.",
-    scamType: "Online Shopping Scam",
-    images: ["https://images.unsplash.com/photo-1605902711622-cfb43c44367d?w=800&q=80"],
-    user: {
-      name: "Meera Nair",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Meera",
-    },
-    timestamp: "Yesterday",
-    likes: 45,
-    comments: 12,
-    isLiked: true,
-  },
-  {
-    id: "5",
-    title: "Lottery Win Message on Facebook",
-    description:
-      "Received a message claiming I won a lottery from Facebook. They asked me to pay ₹2,000 to claim the prize.",
-    scamType: "Lottery Scam",
-    images: ["https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&q=80"],
-    user: {
-      name: "Arun Kumar",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Arun",
-    },
-    timestamp: "3 days ago",
-    likes: 12,
-    comments: 2,
-    isLiked: false,
-  },
-  {
-    id: "6",
-    title: "Fake Tech Support Call",
-    description:
-      "Got a call claiming my computer was hacked and they needed remote access to fix it. They asked me to install an app.",
-    scamType: "Tech Support Scam",
-    images: ["https://images.unsplash.com/photo-1581092919533-3e42b1e276a7?w=800&q=80"],
-    user: {
-      name: "Lena Park",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Lena",
-    },
-    timestamp: "Just now",
-    likes: 7,
-    comments: 1,
-    isLiked: false,
-  },
-  {
-    id: "7",
-    title: "Fraudulent UPI Request on Paytm",
-    description:
-      "Received a Paytm UPI request from a person pretending to be a buyer. They sent a fake screenshot of payment success.",
-    scamType: "UPI Scam",
-    images: ["https://images.unsplash.com/photo-1509395176047-4a66953fd231?w=800&q=80"],
-    user: {
-      name: "Nikhil Verma",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Nikhil",
-    },
-    timestamp: "4 hours ago",
-    likes: 19,
-    comments: 3,
-    isLiked: true,
-  },
-  {
-    id: "8",
-    title: "Instagram Influencer Scam",
-    description:
-      "A fake influencer promised paid promotions and asked for a deposit. After I paid, they vanished.",
-    scamType: "Social Media Scam",
-    images: ["https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&q=80"],
-    user: {
-      name: "Sara Williams",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sara",
-    },
-    timestamp: "Last week",
-    likes: 28,
-    comments: 9,
-    isLiked: false,
-  },
-  {
-    id: "9",
-    title: "Fake Police Call Threatening Arrest",
-    description:
-      "Caller claimed to be from cybercrime police and said my Aadhaar was used in illegal activities. Demanded money to 'close the case.'",
-    scamType: "Impersonation Scam",
-    images: ["https://images.unsplash.com/photo-1629904853893-c2c8981a1dc5?w=800&q=80"],
-    user: {
-      name: "Deepak Joshi",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Deepak",
-    },
-    timestamp: "6 days ago",
-    likes: 34,
-    comments: 6,
-    isLiked: false,
-  },
-  {
-    id: "10",
-    title: "Rent Scam with Fake Property Listing",
-    description:
-      "Found a flat on OLX. The 'owner' claimed to be out of town and asked for a deposit to courier the keys. No response after payment.",
-    scamType: "Rental Scam",
-    images: ["https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80"],
-    user: {
-      name: "Ritika Mehta",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ritika",
-    },
-    timestamp: "1 week ago",
-    likes: 22,
-    comments: 5,
-    isLiked: false,
-  },
-  ]);
+  const [reports, setReports] = useState<ScamReport[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [showAllPosts, setShowAllPosts] = useState(true);
 
   const [newReport, setNewReport] = useState({
     title: "",
     description: "",
-    scamType: "",
-    images: [],
+    scamType: "Phishing", // Default value
+    image: null as File | null,
   });
+
+  // Get current user ID from localStorage
+  useEffect(() => {
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      const parsedData = JSON.parse(userData);
+      setCurrentUserId(parsedData._id);
+    }
+  }, []);
+
+  // Fetch reports from API
+  const fetchReports = async (allPosts = false) => {
+    try {
+      setIsLoading(true);
+      const token = localStorage.getItem('accessToken');
+      
+      const endpoint = allPosts 
+        ? 'https://securesphere-backend-1.onrender.com/api/v1/post/posts'
+        : 'https://securesphere-backend-1.onrender.com/api/v1/post/myposts';
+
+      const headers: Record<string, string> = {};
+      
+      if (!allPosts) {
+        if (!token) {
+          toast.error('Please login to view your posts');
+          navigate('/login');
+          return;
+        }
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const response = await fetch(endpoint, {
+        method: 'GET',
+        headers: headers
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Failed to fetch reports');
+      }
+      
+      const data = await response.json();
+      setReports(data.map((post: ScamReport) => ({
+        ...post,
+        likes: post.likes || 0,
+        comments: post.comments || 0,
+        isLiked: false,
+        user: post.user || {
+          name: "Post Owner",
+          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=User"
+        }
+      })));
+    } catch (error) {
+      toast.error('Failed to load reports');
+      console.error('Error fetching reports:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchReports(showAllPosts);
+  }, [showAllPosts, currentUserId]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -234,52 +143,145 @@ const ScamReportingHub = () => {
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const fileArray = Array.from(e.target.files).map((file) =>
-        URL.createObjectURL(file)
-      );
+    if (e.target.files && e.target.files[0]) {
       setNewReport((prev) => ({
         ...prev,
-        images: [...prev.images, ...fileArray],
+        image: e.target.files![0]
       }));
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newScamReport: ScamReport = {
-      id: Date.now().toString(),
-      title: newReport.title,
-      description: newReport.description,
-      scamType: newReport.scamType,
-      images: newReport.images,
-      user: {
-        name: "Current User",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=CurrentUser",
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  
+  try {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      toast.error('Please login to create a post');
+      navigate('/login');
+      return;
+    }
+
+    // Basic validation
+    if (!newReport.title || !newReport.description || !newReport.scamType) {
+      throw new Error('All fields are required');
+    }
+
+    const formData = new FormData();
+    formData.append('title', newReport.title);
+    formData.append('description', newReport.description);
+    formData.append('scamType', newReport.scamType);
+    
+    if (newReport.image) {
+      // Additional image validation
+      if (!newReport.image.type.startsWith('image/')) {
+        throw new Error('Only image files are allowed');
+      }
+      if (newReport.image.size > 5 * 1024 * 1024) { // 5MB limit
+        throw new Error('Image size must be less than 5MB');
+      }
+      formData.append('image', newReport.image);
+    }
+
+    // Debugging: Log what we're sending
+    console.log('FormData contents:');
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+
+    const response = await fetch('http://localhost:8000/api/v1/post/createpost', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`
+        // Don't set Content-Type - let browser set it with boundary
       },
-      timestamp: "Just now",
-      likes: 0,
-      comments: 0,
-      isLiked: false,
-    };
-    setReports((prev) => [newScamReport, ...prev]);
+      body: formData
+    });
+
+    // Get raw response first
+    const responseText = await response.text();
+    console.log('Raw response:', responseText);
+
+    if (!response.ok) {
+      // Try to extract error message from HTML if needed
+      const errorMatch = responseText.match(/<pre>(.*?)<\/pre>/s);
+      const errorMessage = errorMatch ? errorMatch[1] : 'Server error occurred';
+      throw new Error(errorMessage);
+    }
+
+    // Try to parse JSON
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch (e) {
+      console.error('Failed to parse JSON:', responseText);
+      throw new Error('Server returned invalid JSON');
+    }
+
+    console.log('Post created:', data);
+    
+    // Refresh the posts list
+    await fetchReports(showAllPosts);
+    
+    // Reset form
     setNewReport({
       title: "",
       description: "",
-      scamType: "",
-      images: [],
+      scamType: "Phishing",
+      image: null,
     });
     setIsDialogOpen(false);
+    
+    toast.success('Post created successfully!');
+  } catch (error: any) {
+    console.error('Full error:', error);
+    toast.error(error.message || 'Failed to create post');
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+  const handleDeletePost = async (postId: string) => {
+    if (!window.confirm('Are you sure you want to delete this post?')) return;
+    
+    try {
+      const token = localStorage.getItem('accessToken');
+      if (!token) {
+        toast.error('Please login to delete posts');
+        navigate('/login');
+        return;
+      }
+
+      const response = await fetch(`https://securesphere-backend-1.onrender.com/api/v1/post/deletepost/${postId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Failed to delete post');
+      }
+      
+      setReports(prev => prev.filter(report => report._id !== postId));
+      toast.success('Post deleted successfully!');
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to delete post');
+      console.error('Error deleting post:', error);
+    }
   };
 
   const toggleLike = (reportId: string) => {
     setReports((prev) =>
       prev.map((report) =>
-        report.id === reportId
+        report._id === reportId
           ? {
               ...report,
               isLiked: !report.isLiked,
-              likes: report.isLiked ? report.likes - 1 : report.likes + 1,
+              likes: report.isLiked ? (report.likes || 0) - 1 : (report.likes || 0) + 1,
             }
           : report
       )
@@ -298,8 +300,33 @@ const ScamReportingHub = () => {
     "Other",
   ];
 
+  const formatRelativeTime = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+    
+    if (diffInSeconds < 60) return 'Just now';
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+    if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} days ago`;
+    return date.toLocaleDateString();
+  };
+
   return (
     <div className="w-full min-h-screen bg-[#030712] text-white px-4 py-6">
+      <ToastContainer 
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <div className="flex flex-col">
@@ -311,204 +338,227 @@ const ScamReportingHub = () => {
             </p>
           </div>
 
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                <AlertCircle className="mr-2 h-4 w-4" />
-                Report a Scam
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="bg-[#0f172a] text-white border border-gray-700">
-              <form onSubmit={handleSubmit}>
-                <DialogHeader>
-                  <DialogTitle>Report a Scam</DialogTitle>
-                  <DialogDescription className="text-gray-400">
-                    Share your experience to help others avoid similar scams.
-                  </DialogDescription>
-                </DialogHeader>
-
-                <div className="grid gap-4 py-4">
-                  <div>
-                    <Label htmlFor="title">Title</Label>
-                    <Input
-                      id="title"
-                      name="title"
-                      value={newReport.title}
-                      onChange={handleInputChange}
-                      placeholder="Brief description of the scam"
-                      required
-                      className="bg-gray-800 text-white border-gray-600"
-                    />
-                  </div>
-
-                  <div>
-                    <Label>Scam Type</Label>
-                    <Select
-                      value={newReport.scamType}
-                      onValueChange={handleScamTypeChange}
-                    >
-                      <SelectTrigger className="bg-gray-800 text-white border-gray-600">
-                        <SelectValue placeholder="Select scam type" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-gray-900 text-white">
-                        {scamTypes.map((type) => (
-                          <SelectItem
-                            key={type}
-                            value={type}
-                            className="hover:bg-gray-700"
-                          >
-                            {type}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="description">Description</Label>
-                    <Textarea
-                      id="description"
-                      name="description"
-                      value={newReport.description}
-                      onChange={handleInputChange}
-                      placeholder="Explain how the scam works"
-                      className="min-h-[100px] bg-gray-800 text-white border-gray-600"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="images">Evidence (Optional)</Label>
-                    <Input
-                      id="images"
-                      type="file"
-                      accept="image/*"
-                      multiple
-                      onChange={handleImageUpload}
-                      className="bg-gray-800 text-white border-gray-600"
-                    />
-                    {newReport.images.length > 0 && (
-                      <div className="flex gap-2 mt-2 flex-wrap">
-                        {newReport.images.map((img, i) => (
-                          <img
-                            key={i}
-                            src={img}
-                            className="w-16 h-16 object-cover rounded-md"
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <DialogFooter>
-                  <Button
-                    type="submit"
-                    className="bg-blue-600 hover:bg-blue-700 text-white"
-                  >
-                    Submit Report
-                  </Button>
-                </DialogFooter>
-              </form>
-            </DialogContent>
-          </Dialog>
-        </div>
-
-        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {reports.map((report) => (
-            <Card
-              key={report.id}
-              className="bg-[#0f172a] text-white border border-gray-700 rounded-xl shadow-lg transition-all duration-300 hover:shadow-blue-500/30 hover:-translate-y-1"
+          <div className="flex gap-4">
+            <Button 
+              onClick={() => setShowAllPosts(!showAllPosts)}
+              className="bg-purple-600 hover:bg-purple-700 text-white"
             >
-              <CardHeader className="relative">
-                <div className="flex items-center gap-3">
-                  <Avatar>
-                    <AvatarImage src={report.user.avatar} />
-                    <AvatarFallback>
-                      {report.user.name.charAt(0)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-semibold text-white">
-                      {report.user.name}
-                    </p>
-                    <p className="text-sm text-gray-400">{report.timestamp}</p>
-                  </div>
-                </div>
+              {showAllPosts ? 'Show My Posts' : 'See All Posts'}
+            </Button>
+            
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                  <AlertCircle className="mr-2 h-4 w-4" />
+                  Report a Scam
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="bg-[#0f172a] text-white border border-gray-700">
+                <form onSubmit={handleSubmit}>
+                  <DialogHeader>
+                    <DialogTitle>Report a Scam</DialogTitle>
+                    <DialogDescription className="text-gray-400">
+                      Share your experience to help others avoid similar scams.
+                    </DialogDescription>
+                  </DialogHeader>
 
-                <CardTitle className="mt-3 text-lg leading-tight text-white">
-                  {report.title}
-                </CardTitle>
+                  <div className="grid gap-4 py-4">
+                    <div>
+                      <Label htmlFor="title">Title</Label>
+                      <Input
+                        id="title"
+                        name="title"
+                        value={newReport.title}
+                        onChange={handleInputChange}
+                        placeholder="Brief description of the scam"
+                        required
+                        className="bg-gray-800 text-white border-gray-600"
+                      />
+                    </div>
 
-                <span className="absolute top-4 right-4 bg-blue-700 text-white text-xs font-semibold rounded-full px-3 py-1 shadow-sm">
-                  {report.scamType}
-                </span>
-              </CardHeader>
-
-              <CardContent className="pb-4">
-                <p className="text-sm text-gray-300 mb-3 leading-relaxed">
-                  {report.description}
-                </p>
-
-                {report.images.length > 0 && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {report.images.map((img, i) => (
-                      <div
-                        key={i}
-                        className="overflow-hidden rounded-lg aspect-video"
+                    <div>
+                      <Label>Scam Type</Label>
+                      <Select
+                        value={newReport.scamType}
+                        onValueChange={handleScamTypeChange}
+                        required
                       >
-                        <img
-                          src={img}
-                          className="object-cover w-full h-full transition-transform duration-300 hover:scale-105 rounded-md"
-                          alt="Evidence"
-                        />
-                      </div>
-                    ))}
+                        <SelectTrigger className="bg-gray-800 text-white border-gray-600">
+                          <SelectValue placeholder="Select scam type" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-gray-900 text-white">
+                          {scamTypes.map((type) => (
+                            <SelectItem
+                              key={type}
+                              value={type}
+                              className="hover:bg-gray-700"
+                            >
+                              {type}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="description">Description</Label>
+                      <Textarea
+                        id="description"
+                        name="description"
+                        value={newReport.description}
+                        onChange={handleInputChange}
+                        placeholder="Explain how the scam works"
+                        className="min-h-[100px] bg-gray-800 text-white border-gray-600"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="image">Evidence (Optional)</Label>
+                      <Input
+                        id="image"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        className="bg-gray-800 text-white border-gray-600"
+                      />
+                      {newReport.image && (
+                        <div className="mt-2">
+                          <img 
+                            src={URL.createObjectURL(newReport.image)} 
+                            className="w-32 h-32 object-cover rounded-md"
+                            alt="Preview"
+                          />
+                        </div>
+                      )}
+                    </div>
                   </div>
-                )}
-              </CardContent>
 
-              <CardFooter className="border-t border-gray-700 py-3 px-4">
-                <div className="flex items-center justify-between w-full text-sm text-gray-300">
-                  <button
-                    onClick={() => toggleLike(report.id)}
-                    className="flex items-center gap-1 hover:text-red-400 transition-colors"
-                  >
-                    <Heart
-                      className={`w-4 h-4 transition-all ${
-                        report.isLiked ? "fill-red-500 text-red-500" : ""
-                      }`}
-                    />
-                    <span>{report.likes}</span>
-                  </button>
-
-                  <div className="flex items-center gap-1 hover:text-blue-400 transition-colors">
-                    <MessageSquare className="w-4 h-4" />
-                    <span>{report.comments}</span>
-                  </div>
-
-                  <div className="flex items-center gap-1 hover:text-green-400 transition-colors">
-                    <Share2 className="w-4 h-4" />
-                    <span>Share</span>
-                  </div>
-                </div>
-              </CardFooter>
-
-              <div className="px-4 pb-4 pt-3">
-                <div className="flex items-center gap-2">
-                  <Avatar className="w-8 h-8">
-                    <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=CurrentUser" />
-                    <AvatarFallback>CU</AvatarFallback>
-                  </Avatar>
-                  <Input
-                    placeholder="Add a comment..."
-                    className="bg-gray-800 border border-gray-700 text-white rounded-full px-4 py-2 text-sm focus:ring-1 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-            </Card>
-          ))}
+                  <DialogFooter>
+                    <Button
+                      type="submit"
+                      className="bg-blue-600 hover:bg-blue-700 text-white"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? 'Submitting...' : 'Submit Report'}
+                    </Button>
+                  </DialogFooter>
+                </form>
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
+
+        {isLoading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+        ) : reports.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-400 text-lg">
+              {showAllPosts ? 'No posts available' : 'You have not created any posts yet'}
+            </p>
+          </div>
+        ) : (
+          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {reports.map((report) => (
+              <Card
+                key={report._id}
+                className="bg-[#0f172a] text-white border border-gray-700 rounded-xl shadow-lg transition-all duration-300 hover:shadow-blue-500/30 hover:-translate-y-1"
+              >
+                <CardHeader className="relative">
+                  <div className="flex items-center gap-3">
+                    <Avatar>
+                      <AvatarImage src={report.user?.avatar} />
+                      <AvatarFallback>
+                        {report.user?.name?.charAt(0) || 'U'}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-semibold text-white">
+                        {report.user?.name || 'Anonymous'}
+                      </p>
+                      <p className="text-sm text-gray-400">{formatRelativeTime(report.createdAt)}</p>
+                    </div>
+                  </div>
+
+                  <CardTitle className="mt-3 text-lg leading-tight text-white">
+                    {report.title}
+                  </CardTitle>
+
+                  <span className="absolute top-4 right-4 bg-blue-700 text-white text-xs font-semibold rounded-full px-3 py-1 shadow-sm">
+                    {report.scamType || 'Other'}
+                  </span>
+                  
+                  {currentUserId === report.userId && (
+                    <button 
+                      onClick={() => handleDeletePost(report._id)}
+                      className="absolute top-4 right-20 text-red-500 hover:text-red-400 transition-colors"
+                      title="Delete post"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </button>
+                  )}
+                </CardHeader>
+
+                <CardContent className="pb-4">
+                  <p className="text-sm text-gray-300 mb-3 leading-relaxed">
+                    {report.description}
+                  </p>
+
+                  {report.imageUrl && (
+                    <div className="overflow-hidden rounded-lg aspect-video">
+                      <img
+                        src={report.imageUrl}
+                        className="object-cover w-full h-full transition-transform duration-300 hover:scale-105 rounded-md"
+                        alt="Evidence"
+                      />
+                    </div>
+                  )}
+                </CardContent>
+
+                <CardFooter className="border-t border-gray-700 py-3 px-4">
+                  <div className="flex items-center justify-between w-full text-sm text-gray-300">
+                    <button
+                      onClick={() => toggleLike(report._id)}
+                      className="flex items-center gap-1 hover:text-red-400 transition-colors"
+                    >
+                      <Heart
+                        className={`w-4 h-4 transition-all ${
+                          report.isLiked ? "fill-red-500 text-red-500" : ""
+                        }`}
+                      />
+                      <span>{report.likes || 0}</span>
+                    </button>
+
+                    <div className="flex items-center gap-1 hover:text-blue-400 transition-colors">
+                      <MessageSquare className="w-4 h-4" />
+                      <span>{report.comments || 0}</span>
+                    </div>
+
+                    <div className="flex items-center gap-1 hover:text-green-400 transition-colors">
+                      <Share2 className="w-4 h-4" />
+                      <span>Share</span>
+                    </div>
+                  </div>
+                </CardFooter>
+
+                <div className="px-4 pb-4 pt-3">
+                  <div className="flex items-center gap-2">
+                    <Avatar className="w-8 h-8">
+                      <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Commenter" />
+                      <AvatarFallback>C</AvatarFallback>
+                    </Avatar>
+                    <Input
+                      placeholder="Add a comment..."
+                      className="bg-gray-800 border border-gray-700 text-white rounded-full px-4 py-2 text-sm focus:ring-1 focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

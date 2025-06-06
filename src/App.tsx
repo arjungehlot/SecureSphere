@@ -1,5 +1,5 @@
-import { Suspense } from "react";
-import { useRoutes, Routes, Route } from "react-router-dom";
+import { Suspense, useEffect } from "react";
+import { useRoutes, Routes, Route, useLocation } from "react-router-dom";
 import Home from "../src/components/Home";
 import routes from "tempo-routes";
 import ResourcesPage from "./pages/ResourcesPage";
@@ -17,10 +17,22 @@ import LearnMore from "./pages/LearnMore";
 import AllFeatures from "./pages/AllFeatures";
 import Dashboard from "./pages/Dashboard";
 
+// ScrollToTop component
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
+
 function App() {
   return (
-    <Suspense fallback={<p>Loading...</p> }>
+    <Suspense fallback={<p>Loading...</p>}>
       <>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/resources" element={<ResourcesPage />} />
