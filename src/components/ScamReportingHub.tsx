@@ -337,8 +337,8 @@ const ScamReportingHub = () => {
               Share your experiences and help others stay safe
             </p>
           </div>
-
-          <div className="flex gap-4">
+        
+          <div className="flex flex-col  md:flex-row gap-4">
             <Button 
               onClick={() => setShowAllPosts(!showAllPosts)}
               className="bg-purple-600 hover:bg-purple-700 text-white"
@@ -414,7 +414,7 @@ const ScamReportingHub = () => {
                     </div>
 
                     <div>
-                      <Label htmlFor="image">Evidence (Optional)</Label>
+                      <Label htmlFor="image">Evidence</Label>
                       <Input
                         id="image"
                         type="file"

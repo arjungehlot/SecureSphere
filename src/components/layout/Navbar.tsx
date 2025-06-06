@@ -168,7 +168,11 @@ const Navbar = () => {
                 { to: "/post", label: "Post" }, 
                 { to: "/check-url", label: "CheckURL" }, 
                 { to: "/check-email", label: "CheckEmail" }, 
-                { to: "/check-domain", label: "CheckDomain" }
+                { to: "/check-domain", label: "CheckDomain" },
+                { to: "/heatmap", label: "ScamHeatmap" },
+                { to: "/about", label: "About" },
+                { to: "/resources", label: "Resouces" },
+                { to: "/contact", label: "Contact" },
               ].map(({ to, label }) => (
                 <li key={to}>
                   <Link

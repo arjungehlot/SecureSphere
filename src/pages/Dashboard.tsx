@@ -24,7 +24,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       const token = localStorage.getItem("accessToken");
-      
+
       if (!token) {
         console.log("No token found, redirecting to login");
         navigate("/login");
@@ -34,7 +34,7 @@ const Dashboard = () => {
       try {
         // Fetch user's posts directly
         const postsResponse = await fetch(
-          "https://securesphere-backend-1.onrender.com/api/v1/post/myposts", 
+          "https://securesphere-backend-1.onrender.com/api/v1/post/myposts",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -106,7 +106,7 @@ const Dashboard = () => {
   };
 
   const handleCreatePost = () => {
-    navigate("/create-post");
+    navigate("/post");
   };
 
   if (loading) {
@@ -134,7 +134,8 @@ const Dashboard = () => {
               Welcome to Your Creative Space
             </h2>
             <p className="mt-3 text-gray-300 max-w-2xl">
-              Here you can manage all your posts. Create, edit, and share your thoughts with the world.
+              Here you can manage all your posts. Create, edit, and share your
+              thoughts with the world.
             </p>
             <button
               onClick={handleCreatePost}
@@ -176,7 +177,8 @@ const Dashboard = () => {
                   Your story begins here
                 </h4>
                 <p className="text-gray-400 mb-6">
-                  You haven't created any posts yet. Start sharing your ideas and creations with the world.
+                  You haven't created any posts yet. Start sharing your ideas
+                  and creations with the world.
                 </p>
                 <button
                   onClick={handleCreatePost}
@@ -200,7 +202,9 @@ const Dashboard = () => {
                     <img
                       src={post.imageUrl}
                       alt={post.title}
-                      className={`w-full h-full object-cover transition-all duration-500 ${hoveredPost === post._id ? 'scale-105' : 'scale-100'}`}
+                      className={`w-full h-full object-cover transition-all duration-500 ${
+                        hoveredPost === post._id ? "scale-105" : "scale-100"
+                      }`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                       <button
@@ -212,53 +216,57 @@ const Dashboard = () => {
                     </div>
                   </div>
                   <div className="p-5">
-                    <h4 className="font-semibold text-lg mb-2 line-clamp-1">{post.title}</h4>
+                    <h4 className="font-semibold text-lg mb-2 line-clamp-1">
+                      {post.title}
+                    </h4>
                     <p className="text-gray-400 text-sm mb-4 line-clamp-2">
                       {post.description}
                     </p>
                     <div className="flex justify-between items-center">
                       <span className="text-xs text-gray-500">
-                        {new Date(post.createdAt).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric'
+                        {new Date(post.createdAt).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
                         })}
                       </span>
                       <div className="relative">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            setShowMenu(showMenu === post._id ? null : post._id);
+                            setShowMenu(
+                              showMenu === post._id ? null : post._id
+                            );
                           }}
                           className="p-1 hover:bg-[#334155] rounded-full transition-colors text-gray-400 hover:text-white"
                         >
                           <MoreVertical size={16} />
                         </button>
 
-                       {showMenu === post._id && (
-  <div className="absolute right-0 bottom-full mb-2 w-40 bg-[#1e293b] border border-[#334155] rounded-md shadow-lg z-50 overflow-visible">
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        handleEditPost(post._id);
-      }}
-      className="flex items-center w-full px-4 py-2 text-sm hover:bg-[#334155] transition-colors text-gray-300"
-    >
-      <Edit size={14} className="mr-2" />
-      Edit
-    </button>
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        handleDeletePost(post._id);
-      }}
-      className="flex items-center w-full px-4 py-2 text-sm text-red-400 hover:bg-[#334155] transition-colors"
-    >
-      <Trash2 size={14} className="mr-2" />
-      Delete
-    </button>
-  </div>
-)}
+                        {showMenu === post._id && (
+                          <div className="absolute right-0 bottom-full mb-2 w-40 bg-[#1e293b] border border-[#334155] rounded-md shadow-lg z-50 overflow-visible">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleEditPost(post._id);
+                              }}
+                              className="flex items-center w-full px-4 py-2 text-sm hover:bg-[#334155] transition-colors text-gray-300"
+                            >
+                              <Edit size={14} className="mr-2" />
+                              Edit
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeletePost(post._id);
+                              }}
+                              className="flex items-center w-full px-4 py-2 text-sm text-red-400 hover:bg-[#334155] transition-colors"
+                            >
+                              <Trash2 size={14} className="mr-2" />
+                              Delete
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
