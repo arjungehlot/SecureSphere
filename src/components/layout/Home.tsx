@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import AIChatWithToggle from "./AIChatbot"; // rename import to match file
+import AIChatWithToggle from "../AIChatbot"; // rename import to match file
 import { MessageCircle, X } from "lucide-react";
-import Navbar from "./layout/Navbar";
-import FeaturesSection from "./home/FeaturesSection";
-import TestimonialSection from "./home/TestimonialSection";
-import Footer from "./layout/Footer";
-import HeroSection from "./home/HeroSection";
-import CTASection from "./home/CTASection";
-import RecentPost from "./home/RecentPost";
+import Navbar from "./Navbar";
+import FeaturesSection from "../home/FeaturesSection";
+import TestimonialSection from "../home/TestimonialSection";
+import Footer from "./Footer";
+import HeroSection from "../home/HeroSection";
+import CTASection from "../home/CTASection";
+import RecentPost from "../home/RecentPost";
 
 const Home = () => {
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
