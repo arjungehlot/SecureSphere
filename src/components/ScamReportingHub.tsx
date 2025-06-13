@@ -190,7 +190,7 @@ const ScamReportingHub = () => {
       console.log(key, value);
     }
 
-    const response = await fetch('http://localhost:8000/api/v1/post/createpost', {
+    const response = await fetch('https://securesphere-backend-1.onrender.com/api/v1/post/createpost', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`
