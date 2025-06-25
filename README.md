@@ -59,7 +59,15 @@ SecureSphere combines **AI/ML threat detection models** with **crowdsourced inte
 
 ## 📸 Screenshots
 
-_Add screenshots of the interface here (optional but recommended)_
+![Screenshot 2025-06-01 205438](https://github.com/user-attachments/assets/e4f70e36-2bd2-4365-9bea-b18d95735d36)
+![image](https://github.com/user-attachments/assets/139d07ac-feaf-4efb-87ac-40791edac614)
+![image](https://github.com/user-attachments/assets/58c63043-eab9-48a8-8007-6b94d6c560e6)
+![image](https://github.com/user-attachments/assets/a0742a52-9714-43dd-b648-ad017ce9145e)
+![image](https://github.com/user-attachments/assets/b500d892-6c0a-4b03-b747-7efd659f1229)
+![image](https://github.com/user-attachments/assets/69e7fd46-51d5-4adb-8626-957d30dbc941)
+![image](https://github.com/user-attachments/assets/3a4474a1-a255-430d-a43a-8cf735fa09d2)
+![image](https://github.com/user-attachments/assets/2e4ba24c-5bec-4a58-8566-a4b39bb322ae)
+
 
 ---
 
